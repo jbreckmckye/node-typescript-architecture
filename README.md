@@ -1,5 +1,3 @@
-# node-typescript-architecture
-
 # Node TypeScript Architecture
 
 ## Overview
