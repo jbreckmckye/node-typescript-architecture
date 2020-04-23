@@ -1,0 +1,15 @@
+{
+  "name": "node-typescript-architecture",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:jbreckmckye/node-typescript-architecture.git",
+  "author": "Jimmy Breck-McKye <jimmy@breck-mckye.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "3.8.3"
+  },
+  "dependencies": {
+    "io-ts": "2.2.1",
+    "io-ts-types": "0.5.6"
+  }
+}
