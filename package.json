@@ -5,11 +5,17 @@
   "repository": "git@github.com:jbreckmckye/node-typescript-architecture.git",
   "author": "Jimmy Breck-McKye <jimmy@breck-mckye.com>",
   "license": "MIT",
+  "scripts": {},
   "devDependencies": {
+    "@types/jest": "25.2.1",
+    "@types/node": "13.13.4",
+    "jest": "25.4.0",
+    "ts-jest": "25.4.0",
     "typescript": "3.8.3"
   },
   "dependencies": {
     "io-ts": "2.2.1",
+    "io-ts-reporters": "1.0.0",
     "io-ts-types": "0.5.6"
   }
 }

@@ -1,6 +1,12 @@
-import { Book, BookInput, UserAccount, UserAccountInput } from '../entities'
-import { LoanQuery } from '../entities/Loan'
 import { UUID } from 'io-ts-types/lib/UUID'
+
+import {
+  BookInput,
+  Book,
+  User,
+  UserInput,
+  Loan
+} from '../entities'
 
 export type Backend = {
   bookRepository: BookRepository,
@@ -9,21 +15,20 @@ export type Backend = {
 }
 
 export type BookRepository = {
-  add:    (b: BookInput) => Promise<Book>,
-  delete: (b: Book)      => Promise<void>
+  add:            (b: BookInput)     => Promise<Book>,
+  delete:         (b: Book)          => Promise<void>,
+  find:           (i: UUID)          => Promise<Book|null>
 }
 
 export type UserRepository = {
-  add:    (u: UserAccountInput) => Promise<UserAccount>,
-  delete: (u: UserAccount)      => Promise<void>
+  add:            (u: UserInput)     => Promise<User>,
+  delete:         (u: User)          => Promise<void>,
+  find:           (i: UUID)          => Promise<User|null>
 }
 
 export type LoanRepository = {
-  checkout: (u: UserAccount, b: Book) => Promise<LoanQuery>,
-  return:   (u: UserAccount, b: Book) => Promise<LoanQuery>,
-  getLoan:  (i: UUID)                 => Promise<LoanQuery>,
-  getLoans: (u: UserAccount)          => Promise<LoanQuery[]>,
-  payFine:  (l: LoanQuery, credits: number)
-                                      => Promise<void>
+  takeLoan:       (u: User, b: Book) => Promise<Loan>,
+  endLoan:        (u: User, b: Book) => Promise<Loan>,
+  getUserLoans:   (u: User)          => Promise<Loan[]>,
+  getBookLoaner:  (b: Book)          => Promise<UUID|null>
 }
-

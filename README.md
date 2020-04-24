@@ -14,9 +14,7 @@ This is a library application. It supports the following operations:
 - User transactions:
   - checkout
   - return
-- Fines:
-  - getting fines
-  - paying fines
+
 
 ## Architectural principles
 

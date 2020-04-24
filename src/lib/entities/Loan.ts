@@ -1,37 +1,64 @@
 import t from 'io-ts'
-import { date } from 'io-ts-types/lib/date'
 import { UUID } from 'io-ts-types/lib/UUID'
 
-import { UserAccount } from './UserAccount'
+import { User } from './User'
 import { Book } from './Book'
+import { $cast } from './cast'
 
-export type LoanInput = t.TypeOf<typeof LoanInput>
+// IO-TS Codecs
+// ---------------------------------------------------------------
+
 export const LoanInput = t.exact(
   t.type({
-    user: UserAccount,
-    book: Book,
-    length: t.number
+      userId: UUID,
+      bookId: UUID
   })
 )
 
-export type LoanQuery = t.TypeOf<typeof LoanQuery>
-export const LoanQuery = t.exact(
+export const Loan = t.exact(
   t.type({
-    id: UUID,
-    user: UserAccount,
-    book: Book,
-    started: date,
-    ends: date,
-    active: t.boolean,
-    finesPaid: t.number
+      id: UUID,
+      user: User,
+      book: Book,
+      returned: t.boolean
   })
 )
 
-export type FinePayment = t.TypeOf<typeof FinePayment>
-export const FinePayment = t.exact(
+export const LoanAccepted = t.exact(
   t.type({
-    user: UserAccount,
-    book: Book,
-    finesPaid: t.number
+    tag: t.literal('loanAccepted'),
+    loan: Loan
   })
 )
+
+export const LoanDenied = t.exact(
+  t.type({
+    tag: t.literal('loanDenied'),
+    reason: t.keyof({
+      userHasTooManyLoans: null,
+      bookIsAlreadyLoaned: null
+    })
+  })
+)
+
+
+// Casts
+// ---------------------------------------------------------------
+
+export const castLoanInput = $cast(LoanInput)
+export const castLoan = $cast(Loan)
+export const castLoanAccepted = $cast(LoanAccepted)
+
+
+// Static types
+// ---------------------------------------------------------------
+
+export type LoanInput = t.TypeOf<typeof LoanInput>
+export type Loan = t.TypeOf<typeof Loan>
+
+export type LoanResolution =
+  | LoanAccepted
+  | LoanDenied
+
+export type LoanAccepted = t.TypeOf<typeof LoanAccepted>
+export type LoanDenied = t.TypeOf<typeof LoanDenied>

@@ -1,2 +1,12 @@
-export { BookLoaned } from './BookLoaned'
-export { UserAdded } from './UserAdded'
+export {
+  BookAdded
+} from './Book'
+
+export {
+  UserAdded,
+  UserDeleted
+} from './User'
+
+export {
+  LoanMade
+} from './Loan'

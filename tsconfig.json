@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2018",
+    "esModuleInterop": true,
+
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+
+    "baseUrl": "src",
+    "paths": {
+      "@lib": ["lib"],
+      "@lib/*": ["lib/*"],
+      "@test": ["../test"],
+      "@test/*": ["../test/*"]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
