@@ -9,9 +9,9 @@
 
     "baseUrl": "src",
     "paths": {
-      "@lib": ["lib"],
-      "@lib/*": ["lib/*"],
-      "@test": ["../test"],
+      "@lib":    ["lib"],
+      "@lib/*":  ["lib/*"],
+      "@test":   ["../test"],
       "@test/*": ["../test/*"]
     }
   },
