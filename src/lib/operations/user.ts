@@ -1,15 +1,15 @@
 import { UUID } from 'io-ts-types/lib/UUID'
 import { User, UserInput } from '../entities'
-import { CtxProvider } from '../context'
+import { Context } from '../context'
 import { UserDoesNotExist, UserHasOutstandingLoans } from '../errors'
 
-export function $addUser (ctx: CtxProvider) {
-  return async function addUser (userInput: UserInput): Promise<User> {
-    const {
-      backend:    { userRepository },
-      middleware: { events }
-    } = await ctx()
+export function $addUser (ctx: Context) {
+  const {
+    backend:    { userRepository },
+    middleware: { events }
+  } = ctx
 
+  return async function addUser (userInput: UserInput): Promise<User> {
     const user = await userRepository.add(userInput)
 
     await events.onUserAdded({
@@ -20,13 +20,13 @@ export function $addUser (ctx: CtxProvider) {
   }
 }
 
-export function $removeUser (ctx: CtxProvider) {
-  return async function removeUser (userId: UUID): Promise<void> {
-    const {
-      backend:    { loanRepository, userRepository },
-      middleware: { events }
-    } = await ctx()
+export function $removeUser (ctx: Context) {
+  const {
+    backend:    { loanRepository, userRepository },
+    middleware: { events }
+  } = ctx
 
+  return async function removeUser (userId: UUID): Promise<void> {
     const user = await userRepository.find(userId)
     if (user === null) {
       throw new UserDoesNotExist(userId)

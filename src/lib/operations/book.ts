@@ -1,16 +1,14 @@
 import { Book, BookInput } from '../entities'
-import { CtxProvider } from '../context'
+import { Context } from '../context'
 
-export function $addBook (ctx: CtxProvider) {
+export function $addBook (ctx: Context) {
+  const {
+    backend:    { bookRepository },
+    middleware: { events }
+  } = ctx
+
   return async function addBook (bookInput: BookInput): Promise<Book> {
-    const {
-      backend:    { bookRepository },
-      middleware: { events }
-    } = await ctx()
-
     const book = await bookRepository.add(bookInput)
-    ;
-    console.log('the generated book was', JSON.stringify(book, null, 2))
 
     await events.onBookAdded({
       bookId: book.id,

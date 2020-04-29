@@ -1,16 +1,16 @@
 import { UUID } from 'io-ts-types/lib/UUID'
 
-import { CtxProvider } from '../context'
+import { Context } from '../context'
 import { UserDoesNotExist, BookDoesNotExist, BookWasNotLoaned  } from '../errors'
 import { Book, LoanInput, LoanResolution, User } from '../entities'
 
-export function $loanBook (ctx: CtxProvider) {
-  return async function loanBook (loanInput: LoanInput): Promise<LoanResolution> {
-    const {
-      backend:    { userRepository, bookRepository, loanRepository },
-      middleware: { events }
-    } = await ctx()
+export function $loanBook (ctx: Context) {
+  const {
+    backend:    { userRepository, bookRepository, loanRepository },
+    middleware: { events }
+  } = ctx
 
+  return async function loanBook (loanInput: LoanInput): Promise<LoanResolution> {
     const user = await userRepository.find(loanInput.userId)
     assertUser(user, loanInput.userId)
 
@@ -46,12 +46,12 @@ export function $loanBook (ctx: CtxProvider) {
   }
 }
 
-export function $returnBook (ctx: CtxProvider) {
-  return async function returnBook (bookId: UUID): Promise<void> {
-    const {
-      backend:    { userRepository, bookRepository, loanRepository }
-    } = await ctx()
+export function $returnBook (ctx: Context) {
+  const {
+    backend:    { userRepository, bookRepository, loanRepository }
+  } = ctx
 
+  return async function returnBook (bookId: UUID): Promise<void> {
     const book = await bookRepository.find(bookId)
     assertBook(book, bookId)
 

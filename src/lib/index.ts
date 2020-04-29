@@ -1,20 +1,18 @@
 import * as Operations from './operations'
-import { CtxProvider } from './context'
+import { Context } from './context'
 
-export type Library = {
-  addBook:      ReturnType<typeof Operations.$addBook>,
-  addUser:      ReturnType<typeof Operations.$addUser>,
-  loanBook:     ReturnType<typeof Operations.$loanBook>,
-  removeUser:   ReturnType<typeof Operations.$removeUser>,
-  returnBook:   ReturnType<typeof Operations.$returnBook>
-}
+export type Operation   <T, U> = (input: T) => Promise<U>
+export type $Operation  <T, U> = (ctx: Context) => Operation<T, U>
+export type CtxProvider        = <O> ($operation: O) => O extends $Operation<infer T, infer U> ? Operation<T, U> : never
 
-export function createLibrary (ctx: CtxProvider): Library {
+export { Operations }
+
+export function createLibrary <O> (ctxProvider: CtxProvider) {
   return {
-    addBook:    Operations.$addBook(ctx),
-    addUser:    Operations.$addUser(ctx),
-    loanBook:   Operations.$loanBook(ctx),
-    removeUser: Operations.$removeUser(ctx),
-    returnBook: Operations.$returnBook(ctx)
+    addBook:    ctxProvider(Operations.$addBook),
+    addUser:    ctxProvider(Operations.$addUser),
+    loanBook:   ctxProvider(Operations.$loanBook),
+    removeUser: ctxProvider(Operations.$removeUser),
+    returnBook: ctxProvider(Operations.$returnBook)
   }
 }
