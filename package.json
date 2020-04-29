@@ -11,6 +11,7 @@
     "@types/node": "13.13.4",
     "jest": "25.4.0",
     "ts-jest": "25.4.0",
+    "ts-node": "8.9.1",
     "typescript": "3.8.3"
   },
   "dependencies": {

@@ -7,7 +7,7 @@ export type CtxProvider        = <O> ($operation: O) => O extends $Operation<inf
 
 export { Operations }
 
-export function createLibrary <O> (ctxProvider: CtxProvider) {
+export function createLibrary (ctxProvider: CtxProvider) {
   return {
     addBook:    ctxProvider(Operations.$addBook),
     addUser:    ctxProvider(Operations.$addUser),
