@@ -3,44 +3,40 @@ import { User, UserInput } from '../entities'
 import { Context } from '../context'
 import { UserDoesNotExist, UserHasOutstandingLoans } from '../errors'
 
-export function $addUser (ctx: Context) {
+export async function addUser (ctx: Context, userInput: UserInput): Promise<User> {
   const {
     backend:    { userRepository },
     middleware: { events }
   } = ctx
 
-  return async function addUser (userInput: UserInput): Promise<User> {
-    const user = await userRepository.add(userInput)
+  const user = await userRepository.add(userInput)
 
-    await events.onUserAdded({
-      userId: user.id
-    })
+  await events.onUserAdded({
+    userId: user.id
+  })
 
-    return user
-  }
+  return user
 }
 
-export function $removeUser (ctx: Context) {
+export async function removeUser (ctx: Context, userId: UUID): Promise<void> {
   const {
     backend:    { loanRepository, userRepository },
     middleware: { events }
   } = ctx
 
-  return async function removeUser (userId: UUID): Promise<void> {
-    const user = await userRepository.find(userId)
-    if (user === null) {
-      throw new UserDoesNotExist(userId)
-    }
-
-    const activeLoans = await loanRepository.getUserLoans(user)
-    if (activeLoans.length) {
-      throw new UserHasOutstandingLoans(user)
-    }
-
-    await userRepository.delete(user)
-
-    await events.onUserDeleted({
-      userId: user.id
-    })
+  const user = await userRepository.find(userId)
+  if (user === null) {
+    throw new UserDoesNotExist(userId)
   }
+
+  const activeLoans = await loanRepository.getUserLoans(user)
+  if (activeLoans.length) {
+    throw new UserHasOutstandingLoans(user)
+  }
+
+  await userRepository.delete(user)
+
+  await events.onUserDeleted({
+    userId: user.id
+  })
 }

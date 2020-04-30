@@ -1,13 +1,13 @@
 export {
-  $addBook
+  addBook
 } from './book'
 
 export {
-  $loanBook,
-  $returnBook
+  loanBook,
+  returnBook
 } from './loan'
 
 export {
-  $addUser,
-  $removeUser
+  addUser,
+  removeUser
 } from './user'
