@@ -9,6 +9,7 @@
   "devDependencies": {
     "@types/jest": "25.2.1",
     "@types/node": "13.13.4",
+    "@types/pg": "^7.14.3",
     "jest": "25.4.0",
     "ts-jest": "25.4.0",
     "ts-node": "8.9.1",
@@ -17,6 +18,7 @@
   "dependencies": {
     "io-ts": "2.2.1",
     "io-ts-reporters": "1.0.0",
-    "io-ts-types": "0.5.6"
+    "io-ts-types": "0.5.6",
+    "pg": "8.0.3"
   }
 }
