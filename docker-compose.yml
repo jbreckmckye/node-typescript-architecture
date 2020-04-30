@@ -2,7 +2,9 @@ version: "3"
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: dev/Dockerfile
     depends_on:
       - postgres
     environment:
@@ -14,6 +16,8 @@ services:
 
   postgres:
     image: postgres:12.2
+    volumes:
+      - ./dev/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
     environment:

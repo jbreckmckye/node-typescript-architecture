@@ -60,3 +60,7 @@ TESTS
 
  APP
  (test backend, test frontend, test middleware) -> Lib
+
+## NOTES FOR USERS
+
+Connect 0.0.0.0 -p 5432 user=username pw=password database=db
