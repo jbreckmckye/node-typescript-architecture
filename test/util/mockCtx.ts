@@ -2,7 +2,7 @@ import { BookRepository, LoanRepository, UserRepository } from '@lib/context/bac
 import { EventHandlers } from '@lib/context/middleware'
 import { Context } from '@lib/context'
 
-export function createMockCtx () {
+export function createMockCtx (): Context {
   const bookRepository: BookRepository = {
     add:            jest.fn(),
     delete:         jest.fn(),
@@ -29,7 +29,7 @@ export function createMockCtx () {
     onBookAdded:    jest.fn()
   }
 
-  const ctx: Context = {
+  return {
     backend: {
       bookRepository,
       userRepository,
@@ -39,8 +39,4 @@ export function createMockCtx () {
       events
     }
   }
-
-  const provider = () => Promise.resolve(ctx)
-
-  return { provider, ctx }
 }
