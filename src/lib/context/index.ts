@@ -1,7 +1,12 @@
-import { Backend } from './backend'
-import { Middleware } from './middleware'
+import { BackendCtx } from './backend'
+import { MiddlewareCtx } from './middleware'
+
+export {
+  BackendCtx,
+  MiddlewareCtx
+}
 
 export type Context = {
-  backend: Backend,
-  middleware: Middleware
+  backend: BackendCtx,
+  middleware: MiddlewareCtx
 }

@@ -8,7 +8,7 @@ import {
   Loan
 } from '../entities'
 
-export type Backend = {
+export type BackendCtx = {
   bookRepository: BookRepository,
   loanRepository: LoanRepository,
   userRepository: UserRepository,

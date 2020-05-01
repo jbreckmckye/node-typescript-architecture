@@ -1,14 +1,14 @@
 import { PoolClient } from 'pg'
 import { UUID } from 'io-ts-types/lib/UUID'
-import { Book, castLoan, castUUID, Loan, User } from '@lib/entities'
+import { Book, castLoan, castUUID, Loan, LoanInput, User } from '@lib/entities'
 import { justOne, oneOrNone } from '../asserts'
 
-export async function takeLoan (client: PoolClient, user: User, book: Book): Promise<Loan> {
+export async function takeLoan (client: PoolClient, loanInput: LoanInput): Promise<Loan> {
   const { rows } = await client.query({
     text: `
       INSERT INTO loans ("userId", "bookId")
       VALUES $1, $2`,
-    values: [user.id, book.id]
+    values: [loanInput.userId, loanInput.bookId]
   })
 
   return castLoan(justOne(rows))

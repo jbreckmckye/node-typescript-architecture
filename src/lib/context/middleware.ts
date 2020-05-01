@@ -1,6 +1,6 @@
 import * as Events from '../events'
 
-export type Middleware = {
+export type MiddlewareCtx = {
   events: EventHandlers
 }
 
