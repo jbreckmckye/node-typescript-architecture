@@ -29,7 +29,7 @@ export async function getUserLoans (client: PoolClient, user: User): Promise<Loa
   const { rows } = await client.query({
     text: `
       SELECT * loans 
-      WHERE user_id = $1`,
+      WHERE user_id = $1 AND returned = FALSE`,
     values: [user.id]
   })
 
