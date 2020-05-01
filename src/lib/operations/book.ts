@@ -1,15 +1,15 @@
 import { Book, BookInput } from '../entities'
-import { Context } from '../context'
+import { ContextProvider } from '../context'
 
-export async function addBook (ctx: Context, bookInput: BookInput): Promise<Book> {
+export async function addBook (ctx: ContextProvider, bookInput: BookInput): Promise<Book> {
   const {
-    backend:    { bookRepository },
+    backend:    { bookStore },
     middleware: { events }
   } = ctx
 
-  const book = await bookRepository.add(bookInput)
+  const book = await bookStore('add')(bookInput)
 
-  await events.onBookAdded({
+  await events('onBookAdded')({
     bookId: book.id,
     name: book.name
   })

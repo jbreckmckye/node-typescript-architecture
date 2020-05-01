@@ -6,17 +6,18 @@ export {
   MiddlewareCtx
 }
 
-export type Contexts = {
+export type Context = {
   backend: BackendCtx,
   middleware: MiddlewareCtx
 }
 
-export type CtxResolver <C extends Record<string, Function>> =
+export type CtxTreeResolver <C extends Record<string, Function>> =
   <K extends keyof C> (key: K) =>
     C[K] extends ((input: infer T) => infer U) ? (input: T) => Promise<U> : never
 
-export type CtxProvider <C extends Record<string, any>> =
-  C extends Record<string, Function> ? CtxResolver<C> :
-  C extends Record<string, object> ? { [P in keyof C]: CtxProvider<C[P]> } :
+export type CtxTreeProvider <C extends Record<string, any>> =
+  C extends Record<string, Function> ? CtxTreeResolver<C> :
+  C extends Record<string, object> ? { [P in keyof C]: CtxTreeProvider<C[P]> } :
   never
 
+export type ContextProvider = CtxTreeProvider<Context>

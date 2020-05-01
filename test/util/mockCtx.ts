@@ -1,21 +1,21 @@
-import { BookRepository, LoanRepository, UserRepository } from '@lib/context/backend'
+import { BookStore, LoanStore, UserStore } from '@lib/context/backend'
 import { EventHandlers } from '@lib/context/middleware'
 import { Context } from '@lib/context'
 
 export function createMockCtx (): Context {
-  const bookRepository: BookRepository = {
+  const bookRepository: BookStore = {
     add:            jest.fn(),
     delete:         jest.fn(),
     find:           jest.fn()
   }
 
-  const userRepository: UserRepository = {
+  const userRepository: UserStore = {
     add:            jest.fn(),
     delete:         jest.fn(),
     find:           jest.fn()
   }
 
-  const loanRepository: LoanRepository = {
+  const loanRepository: LoanStore = {
     takeLoan:       jest.fn(),
     endLoan:        jest.fn(),
     getBookLoaner:  jest.fn(),

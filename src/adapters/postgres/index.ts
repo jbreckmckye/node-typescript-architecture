@@ -1,31 +1,31 @@
 import * as Repository from './repositories'
 import { $getClient, GetClient, wrapTransaction } from './client'
-import { BackendCtx, CtxProvider, CtxResolver } from '@lib/context'
+import { BackendCtx, CtxTreeProvider, CtxTreeResolver } from '@lib/context'
 
 type QueryMap = Record<string, Function>
 
 export function $backendContext () {
   const getClient = $getClient()
 
-  return function backendContext (): CtxProvider<BackendCtx> {
+  return function backendContext (): CtxTreeProvider<BackendCtx> {
     return {
-      book: $resolveFn(getClient, {
+      bookStore: $resolveFn(getClient, {
         add:           Repository.Book.add,
         find:          Repository.Book.find
-      }) as CtxResolver<BackendCtx['book']>,
+      }) as CtxTreeResolver<BackendCtx['bookStore']>,
 
-      loan: $resolveFn(getClient, {
+      loanStore: $resolveFn(getClient, {
         takeLoan:      Repository.Loan.takeLoan,
         endLoan:       Repository.Loan.endLoan,
         getUserLoans:  Repository.Loan.getUserLoans,
         getBookLoaner: Repository.Loan.getBookLoaner
-      }) as CtxResolver<BackendCtx['loan']>,
+      }) as CtxTreeResolver<BackendCtx['loanStore']>,
 
-      user: $resolveFn(getClient, {
+      userStore: $resolveFn(getClient, {
         add:           Repository.User.add,
         find:          Repository.User.find,
         remove:        Repository.User.remove
-      }) as CtxResolver<BackendCtx['user']>
+      }) as CtxTreeResolver<BackendCtx['userStore']>
 
     }
   }
@@ -53,6 +53,6 @@ function $resolveFn <M extends QueryMap>(getClient: GetClient, map: M) {
 //
 // const uln = context().loan('getUserLoans')
 
-// const t : CtxResolver<BackendCtx['book']> = ({}) as any
+// const t : CtxTreeResolver<BackendCtx['book']> = ({}) as any
 // const a = t('add')
 
