@@ -9,20 +9,19 @@ import {
 } from '../entities'
 
 export type BackendCtx = {
-  bookRepository: BookRepository,
-  loanRepository: LoanRepository,
-  userRepository: UserRepository,
+  book: BookRepository,
+  loan: LoanRepository,
+  user: UserRepository,
 }
 
 export type BookRepository = {
   add:            (b: BookInput)     => Promise<Book>,
-  delete:         (b: Book)          => Promise<void>,
   find:           (i: UUID)          => Promise<Book|null>
 }
 
 export type UserRepository = {
   add:            (u: UserInput)     => Promise<User>,
-  delete:         (u: User)          => Promise<void>,
+  remove:         (u: User)          => Promise<void>,
   find:           (i: UUID)          => Promise<User|null>
 }
 

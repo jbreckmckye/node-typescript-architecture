@@ -1,32 +1,32 @@
 import * as Repository from './repositories'
 import { $getClient, GetClient, wrapTransaction } from './client'
-import { PoolClient } from 'pg'
+import { BackendCtx, CtxProvider, CtxResolver } from '@lib/context'
 
-type QueryFn <T, U> = (client: PoolClient, input: T) => Promise<U>
-type QueryMap = Record<string, QueryFn<any, any>>
+type QueryMap = Record<string, Function>
 
 export function $backendContext () {
   const getClient = $getClient()
 
-  return function backendContext () {
+  return function backendContext (): CtxProvider<BackendCtx> {
     return {
       book: $resolveFn(getClient, {
         add:           Repository.Book.add,
         find:          Repository.Book.find
-      }),
+      }) as CtxResolver<BackendCtx['book']>,
 
       loan: $resolveFn(getClient, {
         takeLoan:      Repository.Loan.takeLoan,
         endLoan:       Repository.Loan.endLoan,
         getUserLoans:  Repository.Loan.getUserLoans,
         getBookLoaner: Repository.Loan.getBookLoaner
-      }),
+      }) as CtxResolver<BackendCtx['loan']>,
 
       user: $resolveFn(getClient, {
         add:           Repository.User.add,
         find:          Repository.User.find,
         remove:        Repository.User.remove
-      })
+      }) as CtxResolver<BackendCtx['user']>
+
     }
   }
 }
@@ -35,20 +35,24 @@ function $resolveFn <M extends QueryMap>(getClient: GetClient, map: M) {
   return function resolveFn <K extends keyof M> (key: K) {
     const fn = map[key]
 
-    type Input =  (typeof fn) extends QueryFn<infer T, infer U> ? T : never
-    type Output = (typeof fn) extends QueryFn<infer T, infer U> ? U : never
+    if (!fn) {
+      throw new Error('No function of name ' + key)
+    }
 
-    return async function (input: Input): Promise<Output> {
+    return async function <T, U> (input: T): Promise<U> {
       const client = await getClient()
       return wrapTransaction(client, client => fn(client, input))
     }
   }
 }
 
-// const context = $context()
+// const context = $backendContext()
 //
 // const add = context().user('add')
 // const find = context().user('find')
 //
 // const uln = context().loan('getUserLoans')
+
+// const t : CtxResolver<BackendCtx['book']> = ({}) as any
+// const a = t('add')
 
