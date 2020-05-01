@@ -14,8 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS books (
   book_id         UUID          PRIMARY KEY DEFAULT uuid_generate_v4(),
-  name            text          NOT NULL,
-  loaned_by       UUID          REFERENCES users (user_id)
+  name            text          NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS loan (

@@ -28,7 +28,7 @@ export type UserRepository = {
 
 export type LoanRepository = {
   takeLoan:       (u: User, b: Book) => Promise<Loan>,
-  endLoan:        (u: User, b: Book) => Promise<Loan>,
+  endLoan:        (l: Loan)          => Promise<Loan>,
   getUserLoans:   (u: User)          => Promise<Loan[]>,
   getBookLoaner:  (b: Book)          => Promise<UUID|null>
 }

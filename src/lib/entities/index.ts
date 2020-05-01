@@ -1,14 +1,16 @@
 export {
   BookInput,
   Book,
-  castBookInput
+  castBookInput,
+  castBook
 } from './Book'
 
 export {
   Loan,
   LoanInput,
   LoanResolution,
-  castLoanInput
+  castLoanInput,
+  castLoan
 } from './Loan'
 
 export {
