@@ -5,7 +5,9 @@ import { justOne, oneOrNone } from '../asserts'
 
 export async function takeLoan (client: PoolClient, user: User, book: Book): Promise<Loan> {
   const { rows } = await client.query({
-    text: `INSERT INTO loans ("userId", "bookId") VALUES $1, $2`,
+    text: `
+      INSERT INTO loans ("userId", "bookId")
+      VALUES $1, $2`,
     values: [user.id, book.id]
   })
 
@@ -14,7 +16,9 @@ export async function takeLoan (client: PoolClient, user: User, book: Book): Pro
 
 export async function endLoan (client: PoolClient, loan: Loan): Promise<Loan> {
   const { rows } = await client.query({
-    text: `UPDATE loans SET returned = TRUE WHERE book_id = $1`,
+    text: `
+      UPDATE loans SET returned = TRUE
+      WHERE book_id = $1`,
     values: [loan.book.id]
   })
 
@@ -23,7 +27,9 @@ export async function endLoan (client: PoolClient, loan: Loan): Promise<Loan> {
 
 export async function getUserLoans (client: PoolClient, user: User): Promise<Loan[]> {
   const { rows } = await client.query({
-    text: `SELECT * loans WHERE user_id = $1`,
+    text: `
+      SELECT * loans 
+      WHERE user_id = $1`,
     values: [user.id]
   })
 
@@ -32,7 +38,9 @@ export async function getUserLoans (client: PoolClient, user: User): Promise<Loa
 
 export async function getBookLoaner (client: PoolClient, book: Book): Promise<UUID|null> {
   const { rows } = await client.query({
-    text: `SELECT user_id FROM loans WHERE book_id = $1`,
+    text: `
+      SELECT user_id FROM loans
+      WHERE book_id = $1`,
     values: [book.id]
   })
 
