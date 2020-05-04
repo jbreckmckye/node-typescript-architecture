@@ -11,13 +11,23 @@ export type Context = {
   middleware: MiddlewareCtx
 }
 
-export type CtxTreeResolver <C extends Record<string, Function>> =
-  <K extends keyof C> (key: K) =>
-    C[K] extends ((input: infer T) => infer U) ? (input: T) => Promise<U> : never
+export type Operation <I, O> = (c: Context, i: I) => Promise<O>
 
-export type CtxTreeProvider <C extends Record<string, any>> =
-  C extends Record<string, Function> ? CtxTreeResolver<C> :
-  C extends Record<string, object> ? { [P in keyof C]: CtxTreeProvider<C[P]> } :
-  never
+export type ContextAdapter <C = Context> =
+  <I, O> (op: Operation<I, O>) => Promise<{ ctx: Partial<C>, op: Operation<I, O> }>
 
-export type ContextProvider = CtxTreeProvider<Context>
+export function mergeAdapters <C = Context> (...args: ContextAdapter<C>[]): ContextAdapter<C> {
+  const [first, ...rest] = args
+
+  return async function (op) {
+    const result = await first(op)
+    const restResult = await (mergeAdapters(...rest)(result.op))
+    return {
+      ctx: {
+        ...result.ctx,
+        ...restResult.ctx
+      },
+      op: restResult.op
+    }
+  }
+}

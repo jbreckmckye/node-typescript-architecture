@@ -3,13 +3,14 @@ import { User, UserInput } from '../entities'
 import { Context } from '../context'
 import { UserDoesNotExist, UserHasOutstandingLoans } from '../errors'
 
+
 export async function addUser (ctx: Context, userInput: UserInput): Promise<User> {
   const {
-    backend:    { userRepository },
+    backend:    { userStore },
     middleware: { events }
   } = ctx
 
-  const user = await userRepository.add(userInput)
+  const user = await userStore.add(userInput)
 
   await events.onUserAdded({
     userId: user.id
@@ -18,23 +19,24 @@ export async function addUser (ctx: Context, userInput: UserInput): Promise<User
   return user
 }
 
+
 export async function removeUser (ctx: Context, userId: UUID): Promise<void> {
   const {
-    backend:    { loanRepository, userRepository },
+    backend:    { loanStore, userStore },
     middleware: { events }
   } = ctx
 
-  const user = await userRepository.find(userId)
+  const user = await userStore.find(userId)
   if (user === null) {
     throw new UserDoesNotExist(userId)
   }
 
-  const activeLoans = await loanRepository.getUserLoans(user)
+  const activeLoans = await loanStore.getUserLoans(user)
   if (activeLoans.length) {
     throw new UserHasOutstandingLoans(user)
   }
 
-  await userRepository.delete(user)
+  await userStore.remove(user)
 
   await events.onUserDeleted({
     userId: user.id

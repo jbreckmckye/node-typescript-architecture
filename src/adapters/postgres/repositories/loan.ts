@@ -1,6 +1,5 @@
 import { PoolClient } from 'pg'
-import { UUID } from 'io-ts-types/lib/UUID'
-import { Book, castLoan, castUUID, Loan, LoanInput, User } from '@lib/entities'
+import { Book, castLoan, Loan, LoanInput, User } from '@lib/entities'
 import { justOne, oneOrNone } from '../asserts'
 
 export async function takeLoan (client: PoolClient, loanInput: LoanInput): Promise<Loan> {
@@ -36,13 +35,13 @@ export async function getUserLoans (client: PoolClient, user: User): Promise<Loa
   return rows.map(castLoan)
 }
 
-export async function getBookLoaner (client: PoolClient, book: Book): Promise<UUID|null> {
+export async function getLoan (client: PoolClient, book: Book): Promise<Loan|null> {
   const { rows } = await client.query({
     text: `
-      SELECT user_id FROM loans
+      SELECT * FROM loans
       WHERE book_id = $1`,
     values: [book.id]
   })
 
-  return oneOrNone(rows.map(castUUID))
+  return oneOrNone(rows.map(castLoan))
 }

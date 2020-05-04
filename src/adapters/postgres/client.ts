@@ -1,24 +1,21 @@
 import { Pool, PoolClient } from 'pg'
+import { Context, Operation } from '@lib/context'
 
-export type ClientFn <T> = (client: PoolClient) => Promise<T>
-export type GetClient = () => Promise<PoolClient>
+export type DbFn <I, O> = (client: PoolClient, input: I) => Promise<O>
+// export type GetClient = () => Promise<PoolClient>
 
-export function $getClient (): GetClient {
-  const pool = new Pool({
+export function createConnectionPool () {
+  return new Pool({
     max: 5,
     connectionTimeoutMillis: 100,
     idleTimeoutMillis: 500
   })
-
-  return function getClient () {
-    return pool.connect()
-  }
 }
 
-export async function wrapTransaction <T> (client: PoolClient, cb: ClientFn<T>) {
+export async function wrapTransaction <T> (client: PoolClient, cb: () => Promise<T>) {
   try {
     await client.query('BEGIN')
-    const result = await cb(client)
+    const result = await cb()
     await client.query('COMMIT')
     return result
 
@@ -30,3 +27,31 @@ export async function wrapTransaction <T> (client: PoolClient, cb: ClientFn<T>) 
     client.release()
   }
 }
+
+export function withClient <I, O> (client: PoolClient, fn: DbFn<I, O>) {
+  return function (input: I): Promise<O> {
+    return fn(client, input)
+  }
+}
+
+
+// export function wrapOperation <I, O, Op = Operation<I, O>> (clientP: Promise<PoolClient>, op: Op): Op {
+//   return async function (ctx: Context, input: I): Promise<O> {
+//     const client = await clientP
+//
+//     try {
+//       await client.query('BEGIN')
+//       const result: O = await op(ctx, input)
+//       await client.query('COMMIT')
+//       return result
+//
+//     } catch (e) {
+//       await client.query('ROLLBACK')
+//       throw e
+//
+//     } finally {
+//       client.release()
+//     }
+//   }
+// }
+//

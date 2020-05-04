@@ -4,27 +4,28 @@ import { Context } from '../context'
 import { UserDoesNotExist, BookDoesNotExist, BookWasNotLoaned  } from '../errors'
 import { Book, LoanInput, LoanResolution, User } from '../entities'
 
+
 export async function loanBook (ctx: Context, loanInput: LoanInput): Promise<LoanResolution> {
   const {
-    backend:    { userRepository, bookRepository, loanRepository },
+    backend:    { userStore, bookStore, loanStore },
     middleware: { events }
   } = ctx
 
-  const user = await userRepository.find(loanInput.userId)
+  const user = await userStore.find(loanInput.userId)
   assertUser(user, loanInput.userId)
 
-  const book = await bookRepository.find(loanInput.bookId)
+  const book = await bookStore.find(loanInput.bookId)
   assertBook(book, loanInput.bookId)
 
-  const bookLoaner = await loanRepository.getBookLoaner(book)
-  if (bookLoaner) {
+  const existingLoan = await loanStore.getLoan(book)
+  if (existingLoan) {
     return {
       tag: 'loanDenied',
       reason: 'bookIsAlreadyLoaned'
     }
   }
 
-  const userLoans = await loanRepository.getUserLoans(user)
+  const userLoans = await loanStore.getUserLoans(user)
   if (userLoans.length > 3) {
     return {
       tag: 'loanDenied',
@@ -32,34 +33,33 @@ export async function loanBook (ctx: Context, loanInput: LoanInput): Promise<Loa
     }
   }
 
-  const loan = await loanRepository.takeLoan(user, book)
+  const newLoan = await loanStore.takeLoan(user, book)
 
   await events.onLoanMade({
-    loanId: loan.id
+    loanId: newLoan.id
   })
 
   return {
     tag: 'loanAccepted',
-    loan
+    loan: newLoan
   }
 }
 
+
 export async function returnBook (ctx: Context, bookId: UUID): Promise<void> {
   const {
-    backend:    { userRepository, bookRepository, loanRepository }
+    backend:    { bookStore, loanStore }
   } = ctx
 
-  const book = await bookRepository.find(bookId)
+  const book = await bookStore.find(bookId)
   assertBook(book, bookId)
 
-  const loanerID = await loanRepository.getBookLoaner(book)
-  if (!loanerID) throw new BookWasNotLoaned(bookId)
+  const loan = await loanStore.getLoan(book)
+  if (!loan) throw new BookWasNotLoaned(bookId)
 
-  const user = await userRepository.find(loanerID)
-  assertUser(user, loanerID)
-
-  await loanRepository.endLoan(user, book)
+  await loanStore.endLoan(loan)
 }
+
 
 function assertUser (user: User | null, id: UUID): asserts user is User {
   if (!user) throw new UserDoesNotExist(id)

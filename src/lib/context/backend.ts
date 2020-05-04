@@ -5,7 +5,7 @@ import {
   Book,
   User,
   UserInput,
-  Loan
+  Loan, LoanInput
 } from '../entities'
 
 export type BackendCtx = {
@@ -26,8 +26,8 @@ export type UserStore = {
 }
 
 export type LoanStore = {
-  takeLoan:       (u: User, b: Book) => Promise<Loan>,
+  takeLoan:       (l: LoanInput)     => Promise<Loan>,
   endLoan:        (l: Loan)          => Promise<Loan>,
   getUserLoans:   (u: User)          => Promise<Loan[]>,
-  getBookLoaner:  (b: Book)          => Promise<UUID|null>
+  getLoan:        (b: Book)          => Promise<Loan|null>
 }
