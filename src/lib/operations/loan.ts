@@ -33,7 +33,10 @@ export async function loanBook (ctx: Context, loanInput: LoanInput): Promise<Loa
     }
   }
 
-  const newLoan = await loanStore.takeLoan(user, book)
+  const newLoan = await loanStore.takeLoan({
+    bookId: book.id,
+    userId: user.id
+  })
 
   await events.onLoanMade({
     loanId: newLoan.id
