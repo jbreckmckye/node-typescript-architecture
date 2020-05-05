@@ -3,11 +3,10 @@ import { User, UserInput } from '../entities'
 import { Context } from '../context'
 import { UserDoesNotExist, UserHasOutstandingLoans } from '../errors'
 
-
 export async function addUser (ctx: Context, userInput: UserInput): Promise<User> {
   const {
-    backend:    { userStore },
-    middleware: { events }
+    backend: { userStore },
+    events
   } = ctx
 
   const user = await userStore.add(userInput)
@@ -22,8 +21,8 @@ export async function addUser (ctx: Context, userInput: UserInput): Promise<User
 
 export async function removeUser (ctx: Context, userId: UUID): Promise<void> {
   const {
-    backend:    { loanStore, userStore },
-    middleware: { events }
+    backend: { loanStore, userStore },
+    events
   } = ctx
 
   const user = await userStore.find(userId)

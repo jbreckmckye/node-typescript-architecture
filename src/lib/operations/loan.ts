@@ -7,8 +7,8 @@ import { Book, LoanInput, LoanResolution, User } from '../entities'
 
 export async function loanBook (ctx: Context, loanInput: LoanInput): Promise<LoanResolution> {
   const {
-    backend:    { userStore, bookStore, loanStore },
-    middleware: { events }
+    backend: { userStore, bookStore, loanStore },
+    events
   } = ctx
 
   const user = await userStore.find(loanInput.userId)

@@ -1,4 +1,4 @@
-import t from 'io-ts'
+import * as t from 'io-ts'
 import { UUID } from 'io-ts-types/lib/UUID'
 import { $cast } from './cast'
 
