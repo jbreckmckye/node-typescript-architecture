@@ -2,7 +2,7 @@ import * as Repository from './repositories'
 import { createConnectionPool, withClient, wrapTransaction } from './client'
 import { ContextAdapter, Operation } from '@lib/context'
 
-export function $adapter (): ContextAdapter {
+export async function $adapter (): Promise<ContextAdapter> {
   const pool = createConnectionPool()
 
   return async function adapter <I, O> (op: Operation<I, O>) {

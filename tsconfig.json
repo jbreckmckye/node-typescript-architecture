@@ -9,10 +9,14 @@
 
     "baseUrl": "src",
     "paths": {
-      "@lib":    ["lib"],
-      "@lib/*":  ["lib/*"],
-      "@test":   ["../test"],
-      "@test/*": ["../test/*"]
+      "@adapters":   ["adapters"],
+      "@adapters/*": ["adapters/*"],
+      "@bindings":   ["bindings"],
+      "@bindings/*": ["bindings/*"],
+      "@lib":        ["lib"],
+      "@lib/*":      ["lib/*"],
+      "@test":       ["../test"],
+      "@test/*":     ["../test/*"]
     }
   },
   "exclude": [

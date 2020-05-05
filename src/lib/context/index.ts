@@ -1,14 +1,14 @@
 import { BackendCtx } from './backend'
-import { MiddlewareCtx } from './middleware'
+import { EventsCtx } from './events'
 
 export {
   BackendCtx,
-  MiddlewareCtx
+  EventsCtx
 }
 
 export type Context = {
   backend: BackendCtx,
-  middleware: MiddlewareCtx
+  events: EventsCtx
 }
 
 export type Operation <I, O> = (c: Context, i: I) => Promise<O>

@@ -2,8 +2,7 @@ FROM      node:10
 WORKDIR   /app
 
 COPY      src ./src
-COPY      package.json .
-COPY      yarn.lock .
+COPY      package.json yarn.lock tsconfig.json ./
 RUN       yarn
 
-CMD       yarn run ts-node src/apps/webapp/hello.ts
+CMD       yarn run ts-node -r tsconfig-paths/register src/apps/webapp/index.ts
