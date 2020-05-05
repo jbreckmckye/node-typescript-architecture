@@ -7,7 +7,8 @@ export async function add (client: PoolClient, input: BookInput): Promise<Book> 
   const { rows } = await client.query({
     text: `
       INSERT INTO books ("name")
-      VALUES $1`,
+      VALUES ($1)
+      RETURNING *`,
     values: [input.name]
   })
 

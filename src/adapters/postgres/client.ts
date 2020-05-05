@@ -6,7 +6,12 @@ export function createConnectionPool () {
   return new Pool({
     max: 5,
     connectionTimeoutMillis: 100,
-    idleTimeoutMillis: 500
+    idleTimeoutMillis: 500,
+    host: 'postgres',
+    user: 'username',
+    password: 'password',
+    database: 'db',
+    port: 5432
   })
 }
 

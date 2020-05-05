@@ -6,7 +6,8 @@ export async function takeLoan (client: PoolClient, loanInput: LoanInput): Promi
   const { rows } = await client.query({
     text: `
       INSERT INTO loans ("userId", "bookId")
-      VALUES $1, $2`,
+      VALUES ($1, $2)
+      RETURNING *`,
     values: [loanInput.userId, loanInput.bookId]
   })
 
@@ -17,7 +18,8 @@ export async function endLoan (client: PoolClient, loan: Loan): Promise<Loan> {
   const { rows } = await client.query({
     text: `
       UPDATE loans SET returned = TRUE
-      WHERE book_id = $1`,
+      WHERE book_id = $1
+      RETURNING *`,
     values: [loan.book.id]
   })
 

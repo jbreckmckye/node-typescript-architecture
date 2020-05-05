@@ -4,9 +4,12 @@ import { binding } from '@bindings/express'
 import { createLibrary, mergeAdapters } from '@lib'
 
 async function makeApp () {
+  const postgres = await $postgres()
+  const rabbitmq = await $rabbitmq()
+
   const adapters = mergeAdapters(
-    await $postgres(),
-    await $rabbitmq()
+    postgres,
+    rabbitmq
   )
 
   const library = createLibrary(adapters)

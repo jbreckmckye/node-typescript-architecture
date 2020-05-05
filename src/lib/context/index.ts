@@ -21,13 +21,19 @@ export function mergeAdapters <C = Context, P = any> (...args: ContextAdapter<C,
 
   return async function (op, params) {
     const result = await first(op, params)
-    const restResult = await (mergeAdapters(...rest)(result.op, params))
-    return {
-      ctx: {
-        ...result.ctx,
-        ...restResult.ctx
-      },
-      op: restResult.op
+
+    if (rest.length === 0) {
+      return result
+
+    } else {
+      const restResult = await (mergeAdapters(...rest)(result.op, params))
+      return {
+        ctx: {
+          ...result.ctx,
+          ...restResult.ctx
+        },
+        op: restResult.op
+      }
     }
   }
 }

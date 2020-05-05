@@ -12,8 +12,7 @@ export const BookInput = t.exact(t.type({
 export const Book = t.exact(
   t.type({
     id: UUID,
-    name: t.string,
-    loanedBy: t.union([t.null, UUID])
+    name: t.string
   })
 )
 
