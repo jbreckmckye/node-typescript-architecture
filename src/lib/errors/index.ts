@@ -7,3 +7,7 @@ export {
   UserDoesNotExist,
   UserHasOutstandingLoans
 } from './user'
+
+export {
+  EntityDecodeError
+} from './entities'

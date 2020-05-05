@@ -1,11 +1,15 @@
 import * as Operations from './operations'
-import { Context, ContextAdapter, mergeAdapters, wrapAdapter } from './context'
+import * as Entities from './entities'
+import * as Errors from './errors'
+import * as Ctx from './context'
+
+import { ContextAdapter, wrapAdapter } from './context'
 
 export {
-  Context,
-  ContextAdapter,
-  Operations,
-  mergeAdapters
+  Ctx,
+  Entities,
+  Errors,
+  Operations
 }
 
 export type Library = ReturnType<typeof createLibrary>
