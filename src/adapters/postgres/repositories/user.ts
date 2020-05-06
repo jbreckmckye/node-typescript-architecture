@@ -30,6 +30,13 @@ export async function find (client: PoolClient, input: UUID): Promise<User|null>
 export async function remove (client: PoolClient, input: User): Promise<void> {
   await client.query({
     text: `
+      DELETE FROM loans WHERE user_id = $1
+    `,
+    values: [input.id]
+  })
+
+  await client.query({
+    text: `
       DELETE FROM users WHERE id = $1
     `,
     values: [input.id]
