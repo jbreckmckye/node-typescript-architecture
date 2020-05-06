@@ -19,15 +19,19 @@ export function route <T, U> (config: RouteConfig<T, U>) {
       const validatedInput = await Promise.resolve(input)
         .then(validateInput)
         .catch(err => {
-          res.sendStatus(400)
+          res.sendStatus(400).json({
+            err: err.message
+          })
           throw err
         })
 
       const output = await Promise.resolve(validatedInput)
         .then(fn)
         .catch(err => {
-          if (err && err.operationFailure) {
-            res.status(422).json(err)
+          if (err && err.invalidOperation) {
+            res.status(422).json({
+              err: err.message
+            })
           } else {
             res.sendStatus(500)
           }

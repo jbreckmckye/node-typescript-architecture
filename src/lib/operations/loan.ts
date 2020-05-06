@@ -2,10 +2,11 @@ import { UUID } from 'io-ts-types/lib/UUID'
 
 import { Context } from '../context'
 import { UserDoesNotExist, BookDoesNotExist, BookWasNotLoaned  } from '../errors'
-import { Book, LoanInput, LoanResolution, User } from '../entities'
+import { Book, LoanInput, Loan, User } from '../entities'
+import { BookAlreadyLoaned, UserLoanLimitExceeded } from '@lib/errors/loan'
 
 
-export async function loanBook (ctx: Context, loanInput: LoanInput): Promise<LoanResolution> {
+export async function loanBook (ctx: Context, loanInput: LoanInput): Promise<Loan> {
   const {
     backend: { userStore, bookStore, loanStore },
     events
@@ -19,33 +20,24 @@ export async function loanBook (ctx: Context, loanInput: LoanInput): Promise<Loa
 
   const existingLoan = await loanStore.getLoan(book)
   if (existingLoan) {
-    return {
-      tag: 'loanDenied',
-      reason: 'bookIsAlreadyLoaned'
-    }
+    throw new BookAlreadyLoaned(loanInput.bookId)
   }
 
   const userLoans = await loanStore.getUserLoans(user)
   if (userLoans.length > 3) {
-    return {
-      tag: 'loanDenied',
-      reason: 'userHasTooManyLoans'
-    }
+    throw new UserLoanLimitExceeded(loanInput.userId)
   }
 
-  const newLoan = await loanStore.takeLoan({
+  const loan = await loanStore.takeLoan({
     bookId: book.id,
     userId: user.id
   })
 
   await events.onLoanMade({
-    loanId: newLoan.id
+    bookName: book.name
   })
 
-  return {
-    tag: 'loanAccepted',
-    loan: newLoan
-  }
+  return loan
 }
 
 

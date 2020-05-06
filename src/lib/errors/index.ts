@@ -1,7 +1,10 @@
 export {
-  BookDoesNotExist,
-  BookWasNotLoaned
+  BookDoesNotExist
 } from './book'
+
+export {
+  BookWasNotLoaned
+} from './loan'
 
 export {
   UserDoesNotExist,

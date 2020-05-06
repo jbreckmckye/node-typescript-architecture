@@ -23,10 +23,10 @@ export function binding (lib: Library) {
     onSuccess: (res, result) => res.status(201).json(result)
   }))
 
-  app.post('/return/:loanID', route({
+  app.post('/return/:bookID', route({
     fn: lib.loan.return,
     validateInput: Entities.castUUID,
-    getInput: (req, params) => (params as any).loanID,
+    getInput: (req, params) => (params as any).bookID,
     onSuccess: (res) => res.sendStatus(200)
   }))
 
@@ -39,6 +39,7 @@ export function binding (lib: Library) {
   app.delete('/user/:userID', route({
     fn: lib.user.remove,
     validateInput: Entities.castUUID,
+    getInput: (req, params) => (params as any).userID,
     onSuccess: (res) => res.sendStatus(200)
   }))
 

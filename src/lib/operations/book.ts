@@ -15,5 +15,4 @@ export async function addBook (ctx: Context, bookInput: BookInput): Promise<Book
   })
 
   return book
-
 }

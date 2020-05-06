@@ -1,7 +1,7 @@
 import { PoolClient } from 'pg'
 import { UUID } from 'io-ts-types/lib/UUID'
 import { castUser, User, UserInput } from '@lib/entities'
-import { justOne } from '../asserts'
+import { justOne, oneOrNone } from '../asserts'
 
 export async function add (client: PoolClient, input: UserInput): Promise<User> {
   const { name, address } = input
@@ -13,25 +13,37 @@ export async function add (client: PoolClient, input: UserInput): Promise<User> 
     values: [name, address.line1, address.line2, address.postalCode]
   })
 
-  return castUser(justOne(rows))
+  return justOne(rows.map(rowToUser).map(castUser))
 }
 
-export async function find (client: PoolClient, input: UUID): Promise<User> {
+export async function find (client: PoolClient, input: UUID): Promise<User|null> {
   const { rows } = await client.query({
     text: `
-      SELECT * FROM users WHERE user_id = $1
+      SELECT * FROM users WHERE id = $1
     `,
     values: [input]
   })
 
-  return castUser(justOne(rows))
+  return oneOrNone(rows.map(rowToUser).map(castUser))
 }
 
 export async function remove (client: PoolClient, input: User): Promise<void> {
   await client.query({
     text: `
-      DELETE FROM users WHERE user_id = $1
+      DELETE FROM users WHERE id = $1
     `,
     values: [input.id]
   })
+}
+
+function rowToUser (row: { [key: string]: any }) {
+  return {
+    id:           row.id,
+    name:         row.name,
+    address: {
+      line1:      row.address_line1,
+      line2:      row.address_line2,
+      postalCode: row.postal_code
+    }
+  }
 }

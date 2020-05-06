@@ -1,7 +1,7 @@
 import { PoolClient } from 'pg'
 import { UUID } from 'io-ts-types/lib/UUID'
 import { Book, BookInput, castBook } from '@lib/entities'
-import { justOne } from '../asserts'
+import { justOne, oneOrNone } from '../asserts'
 
 export async function add (client: PoolClient, input: BookInput): Promise<Book> {
   const { rows } = await client.query({
@@ -12,10 +12,10 @@ export async function add (client: PoolClient, input: BookInput): Promise<Book> 
     values: [input.name]
   })
 
-  return castBook(justOne(rows))
+  return justOne(rows.map(castBook))
 }
 
-export async function find (client: PoolClient, input: UUID): Promise<Book> {
+export async function find (client: PoolClient, input: UUID): Promise<Book|null> {
   const { rows } = await client.query({
     text: `
       SELECT * FROM books
@@ -23,5 +23,5 @@ export async function find (client: PoolClient, input: UUID): Promise<Book> {
     values: [input]
   })
 
-  return castBook(justOne(rows))
+  return oneOrNone(rows.map(castBook))
 }

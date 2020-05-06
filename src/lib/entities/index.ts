@@ -8,7 +8,6 @@ export {
 export {
   Loan,
   LoanInput,
-  LoanResolution,
   castLoanInput,
   castLoan
 } from './Loan'
