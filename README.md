@@ -1,5 +1,7 @@
 # Node TypeScript Architecture
 
+![Logo (Jost Medium 500 at 66px, in colors white, TS blue, JS yellow)](docs/logo.png)
+
 Not ready yet! Come back soon...
 
 ## Overview
