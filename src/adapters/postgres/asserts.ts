@@ -1,3 +1,7 @@
+// These are just some simple helper functions to aid with reading the database
+// Their use is to explode if we get back an unexpected number of database rows
+// (which suggests something amiss with either the query or the data)
+
 export function justOne <T> (rows: T[]): T {
   switch (rows.length) {
     case 0:

@@ -1,3 +1,6 @@
+// Some hastily-written utils for converting between our domain entities
+// and the way we encode them in Postgres.
+
 export function rowToObject (obj: {[key: string]: any}) {
   return Object.keys(obj).reduce(
     (acc, key) => ({
