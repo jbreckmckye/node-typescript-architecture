@@ -2,25 +2,31 @@
 
 (Work in progress, come back soon!)
 
-![Logo (Jost Medium 500 at 66px, in colors white, TS blue, JS yellow)](docs/logo.png)
+![Logo](docs/logo.png)
 
-This project describes and demonstrates an opinionated architecture for writing Node.js applications, particularly those written
-in TypeScript.
+This project demonstrates an opinionated architecture for writing Node.js applications, particularly those in TypeScript (but
+will work with plain JS too). It provides a project structure, naming conventions, example code and recommended habits for
+building scalable, readable, robust systems.
 
-"Architecture", here, means the way a program is structured to support long term development, and the decisions that are
-often hardest to change without a complete rewrite.
+You can use this architecture to build backend apps, CLI programs, REST APIs, GraphQL boxes or even use it as part of an SPA.
 
-This architecture can be used for backend apps, CLI programs, REST APIs, GraphQL boxes or even as part of an SPA. It can
-support concerns like logging, event emitting and database transactions, and it will work with non-TypeScript projects too.
+It's based off my own experiences writing more Node microservices and JavaScript programs than I can count - but it's just an
+opinion, and the architecture is flexible. You can take individual parts without committing to the whole.
 
-### What kind of architecture?
+## How do I use it?
+
+There's both sample code and documentation. If you're impatient you can dive straight into the commented code samples, but I'd
+recommend reading the docs, as they provide context and a discussion of alternatives and tradeoffs.
+
+## What kind of architecture is this?
 
 NTA is loosely based on an 'onion architecture' pattern (sometimes called the 'clean architecture' or 'ports and adapters'),
-decoupling core business logic from database / storage concerns by means of dependency injection. But don't worry if you've never used DI or have
-bad experiences with IOC frameworks, though - NTA uses no frameworks or magical DI containers, just some simple functional programming
-techniques.
+decoupling core business logic from infrastructure concerns (like databases or HTTP libraries) by means of dependency injection.
 
-(And if you aren't familiar with functional programming in JavaScript, I'll talk you through that, too)
+"Dependency injection" might make some people nervous, evoking distant memories of clunky Java IOC frameworks and Angular.js DI magic.
+Rest assured, NTA uses no frameworks, no containers, just a few simple functional programming capabilities provided by JavaScript.
+
+(If you aren't familiar with functional programming in JavaScript, I'll talk you through that, too)
 
 ## What's in this repo?
 
