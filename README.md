@@ -4,6 +4,8 @@
 
 ![Logo](docs/logo.png)
 
+[GitBook](https://jbreckmckye.gitbook.io/node-ts-architecture/).
+
 This project demonstrates an opinionated architecture for writing Node.js applications, particularly in TypeScript (but
 will work with plain JS too).
 
@@ -17,7 +19,7 @@ Vorpal.js CLI app using an in-memory database - using the same core business log
 
 ## Getting started
 
-The documentation will give you a tour of the codebase, and show you how to run the example code.
+Your best bet is to read the [documentation](https://jbreckmckye.gitbook.io/node-ts-architecture/).
 
 If you're impatient, though, you can dive straight into the codebase. I would look at the webapp example and then work
 backwards from there.
