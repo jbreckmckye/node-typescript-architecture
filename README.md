@@ -4,7 +4,7 @@
 
 ![Logo](docs/logo.png)
 
-[GitBook](https://jbreckmckye.gitbook.io/node-ts-architecture/).
+[Want the docs? Here's the GitBook](https://jbreckmckye.gitbook.io/node-ts-architecture/).
 
 This project demonstrates an opinionated architecture for writing Node.js applications, particularly in TypeScript (but
 will work with plain JS too).
