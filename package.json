@@ -22,9 +22,12 @@
     "amqplib": "0.5.5",
     "body-parser": "1.19.0",
     "express": "4.17.1",
+    "fp-ts": "2.6.1",
     "io-ts": "2.2.2",
     "io-ts-reporters": "1.0.0",
     "io-ts-types": "0.5.6",
+    "monocle-ts": "2.1.0",
+    "newtype-ts": "0.3.4",
     "pg": "8.0.3",
     "tsconfig-paths": "3.9.0",
     "uuid": "8.0.0"

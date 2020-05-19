@@ -28,7 +28,7 @@ export function route <T, U> (config: RouteConfig<T, U>) {
       const output = await Promise.resolve(validatedInput)
         .then(fn)
         .catch(err => {
-          if (err && err.invalidOperation) {
+          if (err && err.invalidOperationErr) {
             res.status(422).json({
               err: err.message
             })
