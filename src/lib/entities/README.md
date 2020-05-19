@@ -1,0 +1,1 @@
+Documentation page on [entities](https://jbreckmckye.gitbook.io/node-ts-architecture/step-by-step/entities).

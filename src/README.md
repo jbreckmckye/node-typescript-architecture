@@ -7,4 +7,4 @@ Each directory represents a key component of NTA:
 - The **bindings** take a lib plus adapters and make it responsive to messages from the outside world
 - Each folder in apps combines the lib with adapters and a binding to make something runnable
 
-You can find out more in the [docs page on project structure](https://jbreckmckye.gitbook.io/node-ts-architecture/project-structure).
+These parts are explained in more detail on the [docs page on project structure](https://jbreckmckye.gitbook.io/node-ts-architecture/project-structure).
