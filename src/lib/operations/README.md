@@ -1,1 +1,1 @@
-Documentation page on [operations](https://jbreckmckye.gitbook.io/node-ts-architecture/step-by-step/operations).
+Read about the operations folder [here](https://jbreckmckye.gitbook.io/node-ts-architecture/step-by-step/operations).

@@ -1,0 +1,1 @@
+Learn about bindings [here](https://app.gitbook.com/@jbreckmckye/s/node-ts-architecture/creating-bindings/what-are-bindings).

@@ -1,1 +1,1 @@
-Documentation page on [events](https://jbreckmckye.gitbook.io/node-ts-architecture/step-by-step/events).
+Read about the events folder [here](https://jbreckmckye.gitbook.io/node-ts-architecture/step-by-step/events).

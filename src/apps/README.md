@@ -1,0 +1,1 @@
+Learn about apps [here](https://app.gitbook.com/@jbreckmckye/s/node-ts-architecture/putting-it-all-together/assembling-apps).

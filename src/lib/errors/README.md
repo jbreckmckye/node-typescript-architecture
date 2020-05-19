@@ -1,1 +1,1 @@
-Documentation page on [errors](https://jbreckmckye.gitbook.io/node-ts-architecture/step-by-step/errors).
+Read about the errors folder [here](https://jbreckmckye.gitbook.io/node-ts-architecture/step-by-step/errors).
