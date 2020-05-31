@@ -39,10 +39,7 @@ export function mergeAdapters <C = Context, P = any> (...args: ContextAdapter<C,
 }
 
 export function wrapAdapter <I, O, CA extends ContextAdapter> (adapter: CA, operation: Operation<I, O>) {
-  type AdapterParams = CA extends ContextAdapter<Context, infer Params>
-    ? Params : any
-
-  return async function (input: I, adapterParams?: AdapterParams) {
+  return async function (input: I, adapterParams?: any) {
     const { ctx, op } = await adapter(operation, adapterParams)
     return op(ctx as Context, input)
   }
