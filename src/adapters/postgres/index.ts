@@ -26,7 +26,8 @@ export async function $adapter (): Promise<ContextAdapter> {
         backend: {
           bookStore: {
             add:          withClient(client, Repository.Book.add),
-            find:         withClient(client, Repository.Book.find)
+            find:         withClient(client, Repository.Book.find),
+            remove:       withClient(client, Repository.Book.remove)
           },
 
           loanStore: {
