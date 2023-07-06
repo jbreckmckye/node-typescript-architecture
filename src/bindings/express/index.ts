@@ -17,6 +17,13 @@ export function binding (lib: Library) {
     onSuccess: (res, result) => res.status(201).json(result)
   }))
 
+  app.delete('/book/:bookID', route({
+    fn: lib.book.remove,
+    validateInput: Entities.castUUID,
+    getInput: (req, params) => (params as any).bookID,
+    onSuccess: (res) => res.sendStatus(200)
+  }))
+
   app.post('/loan', route({
     fn: lib.loan.take,
     validateInput: Entities.castLoanInput,

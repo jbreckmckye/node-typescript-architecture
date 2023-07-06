@@ -7,6 +7,7 @@ export async function $adapter (): Promise<Ctx.ContextAdapter> {
   const backend = {
     bookStore: {
       add:          withDB(db, Repository.Book.add),
+      remove:       withDB(db, Repository.Book.remove),
       find:         withDB(db, Repository.Book.find)
     },
 
