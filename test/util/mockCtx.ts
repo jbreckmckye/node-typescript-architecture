@@ -1,6 +1,5 @@
-import { BookStore, LoanStore, UserStore } from '@lib/context/backend'
-import { EventHandlers } from '@lib/context/middleware'
-import { Context } from '@lib/context'
+import { BackendCtx, BookStore, LoanStore, UserStore } from '@lib/context/backend'
+import { Context, EventsCtx } from '@lib/context'
 
 export function createMockCtx (): Context {
   const bookRepository: BookStore = {
@@ -18,11 +17,17 @@ export function createMockCtx (): Context {
   const loanRepository: LoanStore = {
     takeLoan:       jest.fn(),
     endLoan:        jest.fn(),
-    getBookLoaner:  jest.fn(),
+    getLoan:        jest.fn(),
     getUserLoans:   jest.fn()
   }
 
-  const events: EventHandlers = {
+  const backend: BackendCtx = {
+    bookStore: bookRepository,
+    userStore: userRepository,
+    loanStore: loanRepository
+  }
+
+  const events: EventsCtx = {
     onUserAdded:    jest.fn(),
     onUserDeleted:  jest.fn(),
     onLoanMade:     jest.fn(),
@@ -30,13 +35,7 @@ export function createMockCtx (): Context {
   }
 
   return {
-    backend: {
-      bookRepository,
-      userRepository,
-      loanRepository
-    },
-    middleware: {
-      events
-    }
+    backend,
+    events
   }
 }

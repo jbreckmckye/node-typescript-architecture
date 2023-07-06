@@ -16,12 +16,13 @@ export type BackendCtx = {
 
 export type BookStore = {
   add:            (b: BookInput)     => Promise<Book>,
+  delete:         (i: UUID)          => Promise<void>,
   find:           (i: UUID)          => Promise<Book|null>
 }
 
 export type UserStore = {
   add:            (u: UserInput)     => Promise<User>,
-  remove:         (u: User)          => Promise<void>,
+  delete:         (u: User)          => Promise<void>,
   find:           (i: UUID)          => Promise<User|null>
 }
 
