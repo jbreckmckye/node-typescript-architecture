@@ -5,7 +5,9 @@
   "repository": "git@github.com:jbreckmckye/node-typescript-architecture.git",
   "author": "Jimmy Breck-McKye <jimmy@breck-mckye.com>",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "ts-node -r tsconfig-paths/register ./src/apps/webapp/index.ts"
+  },
   "devDependencies": {
     "@types/amqplib": "^0.10.1",
     "@types/jest": "^29.5.2",
