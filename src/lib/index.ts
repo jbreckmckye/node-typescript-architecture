@@ -20,7 +20,8 @@ export type Library = ReturnType<typeof createLibrary>
 export function createLibrary <Adapter extends ContextAdapter> (adapter: Adapter) {
   return {
     book: {
-      add:    wrapAdapter(adapter, Operations.addBook)
+      add:    wrapAdapter(adapter, Operations.addBook),
+      remove: wrapAdapter(adapter, Operations.removeBook)
     },
     loan: {
       take:   wrapAdapter(adapter, Operations.loanBook),

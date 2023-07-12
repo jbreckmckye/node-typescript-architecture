@@ -4,3 +4,7 @@ export type BookAdded = {
   bookId: UUID,
   name: string
 }
+
+export type BookRemoved = {
+  bookId: UUID
+}

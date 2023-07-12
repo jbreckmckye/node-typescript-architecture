@@ -1,5 +1,6 @@
 export {
-  addBook
+  addBook,
+  removeBook
 } from './book'
 
 export {

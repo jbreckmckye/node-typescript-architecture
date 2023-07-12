@@ -18,7 +18,8 @@ export async function $adapter (): Promise<Ctx.ContextAdapter> {
     onUserAdded: (event) => dispatchEvent('userAdded', event),
     onUserDeleted: (event) => dispatchEvent('userDeleted', event),
     onLoanMade: (event) => dispatchEvent('loanMade', event),
-    onBookAdded: (event) => dispatchEvent('bookAdded', event)
+    onBookAdded: (event) => dispatchEvent('bookAdded', event),
+    onBookRemoved: (event) => dispatchEvent('bookRemoved', event)
   }
 
   return async function adapter <I, O> (op: Ctx.Operation<I, O>) {

@@ -1,5 +1,6 @@
 export {
-  BookDoesNotExist
+  BookDoesNotExist,
+  BookHasOutstandingLoan
 } from './book'
 
 export {

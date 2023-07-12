@@ -1,5 +1,6 @@
 export {
-  BookAdded
+  BookAdded,
+  BookRemoved
 } from './Book'
 
 export {

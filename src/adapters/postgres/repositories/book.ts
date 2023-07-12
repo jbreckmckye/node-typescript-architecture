@@ -25,3 +25,19 @@ export async function find (client: PoolClient, input: UUID): Promise<Book|null>
 
   return oneOrNone(rows.map(castBook))
 }
+
+export async function remove (client: PoolClient, input: Book): Promise<void> {
+  await client.query({
+    text: `
+      DELETE FROM loans WHERE book_id = $1
+    `,
+    values: [input.id]
+  })
+
+  await client.query({
+    text: `
+      DELETE FROM books WHERE id = $1
+    `,
+    values: [input.id]
+  })
+}

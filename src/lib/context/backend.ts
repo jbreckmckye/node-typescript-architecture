@@ -16,6 +16,7 @@ export type BackendCtx = {
 
 export type BookStore = {
   add:            (b: BookInput)     => Promise<Book>,
+  remove:         (i: Book)          => Promise<void>,
   find:           (i: UUID)          => Promise<Book|null>
 }
 

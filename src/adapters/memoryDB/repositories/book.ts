@@ -22,3 +22,12 @@ export async function find (db: MemoryDB, input: UUID): Promise<Book|null> {
   }
   return null
 }
+
+export async function remove (db: MemoryDB, input: Book): Promise<void> {
+  for (const book of db.books) {
+    if (book.id === input.id) {
+      db.books.delete(book)
+      return
+    }
+  }
+}

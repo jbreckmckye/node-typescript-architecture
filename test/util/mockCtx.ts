@@ -1,42 +1,44 @@
-import { BookStore, LoanStore, UserStore } from '@lib/context/backend'
-import { EventHandlers } from '@lib/context/middleware'
-import { Context } from '@lib/context'
+import { v4 as uuid } from 'uuid'
+import { BackendCtx, BookStore, LoanStore, UserStore } from '@lib/context/backend'
+import { Context, EventsCtx } from '@lib/context'
+import { BookInput } from '@lib/entities'
 
 export function createMockCtx (): Context {
   const bookRepository: BookStore = {
-    add:            jest.fn(),
-    delete:         jest.fn(),
+    add:            jest.fn().mockReturnValue({ id: uuid(), name: 'I am a Book'}),
+    remove:         jest.fn(),
     find:           jest.fn()
   }
 
   const userRepository: UserStore = {
     add:            jest.fn(),
-    delete:         jest.fn(),
+    remove:         jest.fn(),
     find:           jest.fn()
   }
 
   const loanRepository: LoanStore = {
     takeLoan:       jest.fn(),
     endLoan:        jest.fn(),
-    getBookLoaner:  jest.fn(),
+    getLoan:        jest.fn(),
     getUserLoans:   jest.fn()
   }
 
-  const events: EventHandlers = {
+  const backend: BackendCtx = {
+    bookStore: bookRepository,
+    userStore: userRepository,
+    loanStore: loanRepository
+  }
+
+  const events: EventsCtx = {
     onUserAdded:    jest.fn(),
     onUserDeleted:  jest.fn(),
     onLoanMade:     jest.fn(),
-    onBookAdded:    jest.fn()
+    onBookAdded:    jest.fn(),
+    onBookRemoved:  jest.fn()
   }
 
   return {
-    backend: {
-      bookRepository,
-      userRepository,
-      loanRepository
-    },
-    middleware: {
-      events
-    }
+    backend,
+    events
   }
 }

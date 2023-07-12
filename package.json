@@ -5,31 +5,33 @@
   "repository": "git@github.com:jbreckmckye/node-typescript-architecture.git",
   "author": "Jimmy Breck-McKye <jimmy@breck-mckye.com>",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "ts-node -r tsconfig-paths/register ./src/apps/webapp/index.ts"
+  },
   "devDependencies": {
-    "@types/amqplib": "0.5.13",
-    "@types/jest": "25.2.1",
-    "@types/node": "13.13.4",
-    "@types/pg": "^7.14.3",
-    "@types/uuid": "7.0.3",
-    "jest": "25.4.0",
-    "ts-jest": "25.4.0",
-    "ts-node": "8.9.1",
-    "typescript": "3.8.3"
+    "@types/amqplib": "^0.10.1",
+    "@types/jest": "^29.5.2",
+    "@types/node": "^20.4.0",
+    "@types/pg": "^8.10.2",
+    "@types/uuid": "^9.0.2",
+    "jest": "^29.6.0",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@types/express": "4.17.6",
-    "amqplib": "0.5.5",
-    "body-parser": "1.19.0",
-    "express": "4.17.1",
-    "fp-ts": "2.6.1",
-    "io-ts": "2.2.2",
-    "io-ts-reporters": "1.0.0",
-    "io-ts-types": "0.5.6",
-    "monocle-ts": "2.1.0",
-    "newtype-ts": "0.3.4",
-    "pg": "8.0.3",
-    "tsconfig-paths": "3.9.0",
-    "uuid": "8.0.0"
+    "@types/express": "^4.17.17",
+    "amqplib": "^0.10.3",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "fp-ts": "^2.16.0",
+    "io-ts": "^2.2.20",
+    "io-ts-reporters": "^2.0.1",
+    "io-ts-types": "^0.5.19",
+    "monocle-ts": "^2.3.13",
+    "newtype-ts": "^0.3.5",
+    "pg": "^8.11.1",
+    "tsconfig-paths": "^4.2.0",
+    "uuid": "^9.0.0"
   }
 }
