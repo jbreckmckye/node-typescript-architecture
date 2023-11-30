@@ -1,7 +1,5 @@
 # Node TypeScript Architecture
 
-(Work in progress, come back soon!)
-
 ![Logo](docs/logo.png)
 
 This is the companion responsibility for the [Node TypeScript Architecture GitBook](https://jbreckmckye.gitbook.io/node-ts-architecture/).
